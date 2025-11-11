@@ -1,7 +1,7 @@
 use core::fmt;
 use std::{fs, future::Future, ptr::read, sync::OnceLock};
 
-use actix_web::{get, middleware, post, put, web, Error, HttpRequest, HttpResponse, Responder};
+use actix_web::{Error, HttpRequest, HttpResponse, Responder, get, http::header::ContentType, middleware, post, put, web};
 use chrono::*;
 
 use icalendar::*;
@@ -31,14 +31,17 @@ async fn test() -> impl Responder {
 static CLIENT: OnceLock<Client> = OnceLock::new();
 
 
-#[get("/smullerijen.ical")]
+#[get("/smullerijen.ics")]
 async fn get_calender() -> impl Responder {
     println!("get_calender");
 
     let csv_content = get_sheet_data().await;
     let mut calendar = convert_to_calendar(csv_content).unwrap();
+
+    HttpResponse::Ok()
+        .content_type( "text/calendar")
+        .body(calendar.done().to_string())
     
-    calendar.done().to_string()
     // let mut my_calendar = Calendar::new().name("Salina en Pepijn in Mortsel").done();
 
     // // push(&mut my_calendar,"Pinenut",year, 0,1);
