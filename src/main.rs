@@ -22,10 +22,10 @@ async fn main() -> std::io::Result<()> {
     .await
 }
 
-#[get("/test")]
+#[get("/")]
 async fn test() -> impl Responder {
     println!("test");
-    "hallo pimmie"
+    "hier is niets"
 }
 
 static CLIENT: OnceLock<Client> = OnceLock::new();
