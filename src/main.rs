@@ -55,6 +55,7 @@ fn convert_to_calendar(csv_content: String)-> Result<Calendar, Box<dyn std::erro
     let mut reader = csv::Reader::from_reader(csv_content.as_bytes());
 
     let mut my_calendar = Calendar::new().name("Salina en Pepijn in Mortsel").done();
+    my_calendar.timezone("CET");
 
     for result in reader.records() {
         let record= result?;
