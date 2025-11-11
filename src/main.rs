@@ -1,12 +1,11 @@
-use core::fmt;
-use std::{fs, future::Future, ptr::read, sync::OnceLock};
 
-use actix_web::{Error, HttpRequest, HttpResponse, Responder, get, http::header::ContentType, middleware::{self, Logger}, post, put, web};
+use std::sync::OnceLock;
+
+use actix_web::{ HttpRequest, HttpResponse, Responder, get, middleware::{self, Logger},web};
 use chrono::*;
 
 use icalendar::*;
 use reqwest::Client;
-use serde::{Deserialize, Deserializer};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -25,9 +24,6 @@ async fn main() -> std::io::Result<()> {
 
 #[get("/")]
 async fn test(req: HttpRequest) -> impl Responder {
-    if let Some(val) = req.connection_info().realip_remote_addr() {
-        println!("Address {:?}", val);
-    };
     "hier is niets"
 }
 
